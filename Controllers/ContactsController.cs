@@ -10,21 +10,15 @@ namespace Maintainance.Controllers
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ContactsController(ApplicationDbContext context)
+        public ContactsController()
         {
-            _context = context;
+            _context = new ApplicationDbContext();
         }
         // GET: Contacts
-        public ActionResult Index()
+        public ActionResult ContactInfo()
         {
             var data = _context.contacts.ToList();
             return View(data);
-        }
-
-        // GET: Contacts/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: Contacts/Create
@@ -35,14 +29,22 @@ namespace Maintainance.Controllers
 
         // POST: Contacts/Create
         [HttpPost]
-        public ActionResult Create(Contacts contact)
+        public ActionResult CreateOrUpdate(Contacts contact)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    _context.contacts.Add(contact);
-                    _context.SaveChanges();
+                    if (contact.ID == 0)
+                    {
+                        _context.contacts.Add(contact);
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        Edit(contact.ID, contact);
+
+                    }
                     return RedirectToAction("Index");
                 }
                 return View("Create", contact);
@@ -64,25 +66,25 @@ namespace Maintainance.Controllers
 
         // POST: Contacts/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id,Contacts contacts)
+        public bool Edit(int id,Contacts contacts)
         {
             try
             {
                 if (ModelState.IsValid) { 
                 var contact = getcontact(id);
                     if (contact == null)
-                        return HttpNotFound();
+                        return false;
                     else
                     {
                         contact = contacts;
                         _context.SaveChanges();
                     }
                 }
-                return RedirectToAction("Index");
+                return true;
             }
             catch
             {
-                return View();
+                throw;
             }
         }
        

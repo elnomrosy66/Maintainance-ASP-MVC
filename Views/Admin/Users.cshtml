@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Maintainance.Helpers.presidence.UserWRoles>
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Admin/Dashboard.cshtml";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"><a href="/Admin/RegisterUser" class="btn btn-custom waves-effect waves-light mb-4" data-animation="fadein" data-plugin="custommodal" data-overlayspeed="200" data-overlaycolor="#36404a"><i class="mdi mdi-plus"></i> Add Member</a></div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+        <div class="row">
+        @foreach (var data in Model)
+        {
+            <!-- end col -->
+            <div class="col-lg-4">
+                <div class="text-center card-box">
+                    <div class="member-card pt-2 pb-2">
+                        <div class="">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png"width="60" height="60" class="rounded-circle" alt="profile-image">
+                            <h4>@data.Username</h4>
+                            <p class="text-muted">@data.Role <span>| </span><span><a href="#" class="text-pink">@data.Email</a></span></p>
+                        </div>
+                     
+                        <button type="button" class="btn btn-primary mt-3 btn-rounded waves-effect w-md waves-light">Message Now</button>
+
+                    </div>
+                </div>
+            </div>}
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div>
+    <!-- container -->
+</div>

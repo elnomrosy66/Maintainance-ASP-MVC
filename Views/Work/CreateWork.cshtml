@@ -1,0 +1,55 @@
+﻿@model Maintainance.Models.OurWork
+
+@{
+    ViewBag.Title = "CreateWork";
+
+}
+
+<h2 class="text-center well">اضافة عمل جديد</h2>
+
+@using (Html.BeginForm("Create", "Work", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" dir="rtl">
+
+        <div class="form-group has-error">
+            <label for="slug">العنوان <span class="require">*</span> <small>(هذا العنوان الذي سيظهر للمستخدمين)</small></label>
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", placeholder = "العنوان" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="title">الوصف <span class="require">*</span></label>
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "التفاصيل ", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="description">الصورة</label>
+            @Html.LabelFor(m => m.Image)
+            <label class="btn btn-default">
+                أختر صورة <input type="file" id="ImageFile" name="ImageFile" accept="image/jpeg, image/png" hidden>
+            </label>
+            @Html.HiddenFor(m => m.Image)
+            @Html.ValidationMessageFor(m => m.Image)
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+                أضافة
+            </button>
+            <button class="btn btn-default">
+                الغاء
+            </button>
+        </div>
+        </div>
+        }
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
